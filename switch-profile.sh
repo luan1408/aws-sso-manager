@@ -18,10 +18,10 @@ unset AWS_SECRET_ACCESS_KEY
 # Define o perfil baseado no argumento
 case $PROFILE in
     "dev")
-        export AWS_PROFILE=wiipo-dev
+        export AWS_PROFILE=empresa-dev
         ;;
     "prod")
-        export AWS_PROFILE=wiipo-prod
+        export AWS_PROFILE=empresa-prod
         ;;
     "local")
         export AWS_PROFILE=local

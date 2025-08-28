@@ -79,8 +79,8 @@ aws-login empresa-prod
 aws-who
 
 # Atalhos rápidos (configuráveis)
-aws-dev     # Troca para wiipo-dev
-aws-prod    # Troca para wiipo-prod
+aws-dev     # Troca para empresa-dev
+aws-prod    # Troca para empresa-prod
 ```
 
 ### Adicionar Novo Perfil

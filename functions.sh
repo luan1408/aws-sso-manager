@@ -99,6 +99,6 @@ aws-logout() {
 }
 
 # Atalhos para perfis mais usados
-alias aws-dev='aws-switch wiipo-dev'
-alias aws-prod='aws-switch wiipo-prod'
+alias aws-dev='aws-switch empresa-dev'
+alias aws-prod='aws-switch empresa-prod'
 alias aws-default='aws-switch default'
