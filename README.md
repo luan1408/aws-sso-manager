@@ -62,10 +62,14 @@ chmod +x ~/bin/*.sh
 | `aws-login <perfil>` | Faz login SSO em um perfil |
 | `aws-who` | Mostra qual perfil está ativo |
 | `aws-logout` | Faz logout de todos os perfis |
+| `aws-discover-org` | 🆕 Descobre automaticamente todas as contas da organização e configura perfis SSO |
 
 ### Exemplos de Uso
 
 ```bash
+# Descobrir e configurar automaticamente todas as contas da organização
+aws-discover-org
+
 # Listar perfis disponíveis
 aws-list
 
@@ -84,6 +88,26 @@ aws-prod    # Troca para empresa-prod
 ```
 
 ### Adicionar Novo Perfil
+
+#### Descoberta Automática de Contas da Organização 🆕
+
+```bash
+# Descobre automaticamente todas as contas da sua organização AWS
+aws-discover-org
+
+# O comando irá:
+# 1. Listar todas as contas ativas da organização
+# 2. Para cada conta, perguntar se você quer criar um perfil
+# 3. Sugerir nomes de perfil baseados no nome da conta
+# 4. Configurar automaticamente os perfis SSO
+```
+
+**Pré-requisitos para usar `aws-discover-org`:**
+- Estar logado em uma conta que faz parte da organização AWS
+- Ter permissões para `organizations:ListAccounts`
+- Python 3 instalado (geralmente já vem no sistema)
+
+#### Método Manual Individual
 
 ```bash
 # Método interativo
@@ -112,18 +136,23 @@ aws-sso-manager/
 
 ## 🔄 Fluxo de Trabalho Típico
 
-1. **Primeira vez:**
+1. **Setup inicial (organizações AWS):**
+   ```bash
+   aws-discover-org         # Descobre e configura todas as contas automaticamente
+   ```
+
+2. **Primeira vez:**
    ```bash
    aws-login empresa-dev    # Login inicial
    ```
 
-2. **Trabalho diário:**
+3. **Trabalho diário:**
    ```bash
    aws-switch empresa-dev   # Troca rápida entre perfis
    aws-switch empresa-prod
    ```
 
-3. **Verificação:**
+4. **Verificação:**
    ```bash
    aws-who                  # Confirma qual ambiente está ativo
    ```
@@ -136,6 +165,8 @@ aws-sso-manager/
 - 🚀 **Atalhos personalizáveis** para perfis frequentes
 - 🧹 **Limpeza automática** de variáveis de ambiente conflitantes
 - ⚠️ **Avisos úteis** quando credenciais expiram
+- 🏢 **Descoberta automática** de contas da organização AWS
+- 🤖 **Configuração automática** de perfis SSO para todas as contas
 
 ## 🛠️ Personalização
 
@@ -175,6 +206,18 @@ source ~/.bashrc
 
 # Ou reinicie o terminal
 ```
+
+### Erro: "Não foi possível acessar AWS Organizations"
+```bash
+# Certifique-se de ter as permissões necessárias
+# A conta deve ter permissão: organizations:ListAccounts
+
+# Verifique se está na conta master/management da organização
+aws-who
+
+# Certifique-se de que está usando uma conta da organização (não conta standalone)
+```
+
 
 ## 🤝 Contribuindo
 
