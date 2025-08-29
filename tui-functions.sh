@@ -69,7 +69,8 @@ _check_profile_status() {
 _generate_profile_list() {
     echo "🔍 Carregando perfis..."
     
-    local current_profile="${AWS_PROFILE:-default}"
+    local current_profile
+    current_profile=$(_get_current_profile)
     local profiles
     
     # Get all profiles
@@ -276,7 +277,9 @@ aws-menu() {
         echo "║                                      ║"
         echo "╚══════════════════════════════════════╝"
         echo ""
-        echo "Perfil atual: ${AWS_PROFILE:-default}"
+        local current_profile
+        current_profile=$(_get_current_profile)
+        echo "Perfil atual: $current_profile"
         echo ""
         
         read -p "Escolha uma opção [1-8]: " choice

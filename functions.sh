@@ -1,12 +1,44 @@
 # Funções AWS - Gerenciamento inteligente de perfis
 # Adicione isso ao seu ~/.bashrc
 
+# Função auxiliar para obter o perfil atual com persistência
+_get_current_profile() {
+    # Prioriza AWS_PROFILE se estiver definido
+    if [ -n "$AWS_PROFILE" ]; then
+        echo "$AWS_PROFILE"
+    # Caso contrário, lê do arquivo de estado
+    elif [ -f ~/.aws/current_profile ]; then
+        local saved_profile
+        saved_profile=$(cat ~/.aws/current_profile 2>/dev/null)
+        if [ -n "$saved_profile" ]; then
+            echo "$saved_profile"
+        else
+            echo "default"
+        fi
+    else
+        echo "default"
+    fi
+}
+
+# Inicializa o perfil AWS se não estiver definido
+_init_aws_profile() {
+    if [ -z "$AWS_PROFILE" ] && [ -f ~/.aws/current_profile ]; then
+        local saved_profile
+        saved_profile=$(cat ~/.aws/current_profile 2>/dev/null)
+        if [ -n "$saved_profile" ]; then
+            export AWS_PROFILE="$saved_profile"
+        fi
+    fi
+}
+
 # Lista todos os perfis AWS disponíveis
 aws-list() {
+    _init_aws_profile
     echo "📋 Perfis AWS disponíveis:"
     echo "─────────────────────────────────"
     
-    local current_profile="${AWS_PROFILE:-default}"
+    local current_profile
+    current_profile=$(_get_current_profile)
     
     # Lista perfis do ~/.aws/config
     aws configure list-profiles 2>/dev/null | while read profile; do
@@ -45,6 +77,10 @@ aws-switch() {
     # Define o perfil
     export AWS_PROFILE="$target_profile"
     
+    # Salva o perfil atual para persistência entre sessões
+    mkdir -p ~/.aws
+    echo "$target_profile" > ~/.aws/current_profile
+    
     echo "✅ Trocado para perfil: $AWS_PROFILE"
     
     # Verifica se as credenciais estão válidas
@@ -77,6 +113,9 @@ aws-login() {
     
     if [ $? -eq 0 ]; then
         export AWS_PROFILE="$profile"
+        # Salva o perfil atual para persistência entre sessões
+        mkdir -p ~/.aws
+        echo "$profile" > ~/.aws/current_profile
         echo "✅ Login realizado com sucesso!"
         aws sts get-caller-identity --query '[UserId,Account]' --output table 2>/dev/null
     else
@@ -86,7 +125,10 @@ aws-login() {
 
 # Mostra informações da conta atual
 aws-who() {
-    echo "📋 Perfil atual: ${AWS_PROFILE:-default}"
+    _init_aws_profile
+    local current_profile
+    current_profile=$(_get_current_profile)
+    echo "📋 Perfil atual: $current_profile"
     aws sts get-caller-identity --query '[UserId,Account]' --output table 2>/dev/null || echo "❌ Não logado ou credenciais expiradas"
 }
 
