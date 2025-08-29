@@ -3,18 +3,19 @@
 
 # Função auxiliar para obter o perfil atual com persistência
 _get_current_profile() {
-    # Prioriza AWS_PROFILE se estiver definido
-    if [ -n "$AWS_PROFILE" ]; then
-        echo "$AWS_PROFILE"
-    # Caso contrário, lê do arquivo de estado
-    elif [ -f ~/.aws/current_profile ]; then
+    # Lê sempre do arquivo de estado primeiro (mais confiável)
+    if [ -f ~/.aws/current_profile ]; then
         local saved_profile
         saved_profile=$(cat ~/.aws/current_profile 2>/dev/null)
         if [ -n "$saved_profile" ]; then
             echo "$saved_profile"
-        else
-            echo "default"
+            return
         fi
+    fi
+    
+    # Se não há arquivo ou está vazio, usa AWS_PROFILE ou default
+    if [ -n "$AWS_PROFILE" ]; then
+        echo "$AWS_PROFILE"
     else
         echo "default"
     fi
@@ -33,7 +34,6 @@ _init_aws_profile() {
 
 # Lista todos os perfis AWS disponíveis
 aws-list() {
-    _init_aws_profile
     echo "📋 Perfis AWS disponíveis:"
     echo "─────────────────────────────────"
     
@@ -125,7 +125,6 @@ aws-login() {
 
 # Mostra informações da conta atual
 aws-who() {
-    _init_aws_profile
     local current_profile
     current_profile=$(_get_current_profile)
     echo "📋 Perfil atual: $current_profile"
