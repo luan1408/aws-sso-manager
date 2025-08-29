@@ -126,12 +126,12 @@ git pull origin main
 ### Exemplo de Uso
 ```bash
 # Terminal 1
-aws-menu                    # Seleciona fiquiticeo-prod
+aws-menu                    # Seleciona empresa-prod
 # (sai do menu)
-aws-list                    # ✅ Mostra "fiquiticeo-prod (atual)"
+aws-list                    # ✅ Mostra "empresa-prod (atual)"
 
 # Terminal 2 (novo)
-aws-list                    # ✅ Ainda mostra "fiquiticeo-prod (atual)"
+aws-list                    # ✅ Ainda mostra "empresa-prod (atual)"
 ```
 
 > 🎉 **Zero configuração adicional** - funciona automaticamente após instalar com `./install.sh`!
@@ -381,8 +381,8 @@ mv ~/.bashrc.clean ~/.bashrc
 ls -la ~/.aws/current_profile
 
 # Testar persistência manualmente
-aws-switch fiquiticeo-dev
-cat ~/.aws/current_profile  # Deve mostrar: fiquiticeo-dev
+aws-switch empresa-dev
+cat ~/.aws/current_profile  # Deve mostrar: empresa-dev
 
 # Se não funciona, reinstalar
 ./install.sh
