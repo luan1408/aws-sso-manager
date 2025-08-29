@@ -126,12 +126,12 @@ git pull origin main
 ### Exemplo de Uso
 ```bash
 # Terminal 1
-aws-menu                    # Seleciona wiipo-prod
+aws-menu                    # Seleciona fiquiticeo-prod
 # (sai do menu)
-aws-list                    # ✅ Mostra "wiipo-prod (atual)"
+aws-list                    # ✅ Mostra "fiquiticeo-prod (atual)"
 
 # Terminal 2 (novo)
-aws-list                    # ✅ Ainda mostra "wiipo-prod (atual)"
+aws-list                    # ✅ Ainda mostra "fiquiticeo-prod (atual)"
 ```
 
 > 🎉 **Zero configuração adicional** - funciona automaticamente após instalar com `./install.sh`!
@@ -381,8 +381,8 @@ mv ~/.bashrc.clean ~/.bashrc
 ls -la ~/.aws/current_profile
 
 # Testar persistência manualmente
-aws-switch wiipo-dev
-cat ~/.aws/current_profile  # Deve mostrar: wiipo-dev
+aws-switch fiquiticeo-dev
+cat ~/.aws/current_profile  # Deve mostrar: fiquiticeo-dev
 
 # Se não funciona, reinstalar
 ./install.sh
