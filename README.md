@@ -1,5 +1,7 @@
 # AWS SSO Manager
 
+[![Author](https://img.shields.io/badge/Author-luan1408-blue?style=flat-square)](https://github.com/luan1408)
+
 🚀 Gerenciador inteligente para perfis AWS SSO que simplifica a troca entre diferentes ambientes AWS.
 
 ## 📋 Requisitos
@@ -24,13 +26,13 @@ aws --version
 
 ### Opção 1: Instalação Automática
 ```bash
-curl -sSL https://raw.githubusercontent.com/SEU_USUARIO/aws-sso-manager/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/luan1408/aws-sso-manager/main/install.sh | bash
 ```
 
 ### Opção 2: Instalação Manual
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/SEU_USUARIO/aws-sso-manager.git
+git clone https://github.com/luan1408/aws-sso-manager.git
 cd aws-sso-manager
 
 # 2. Execute o instalador
@@ -226,6 +228,14 @@ aws-who
 3. Commit suas mudanças (`git commit -am 'Add nova funcionalidade'`)
 4. Push para a branch (`git push origin feature/nova-funcionalidade`)
 5. Abra um Pull Request
+
+## 👨‍💻 Autor
+
+**Luan Messias** - [@luan1408](https://github.com/luan1408)
+
+📧 Contato: luan.1408lg@gmail.com
+
+Se este projeto te ajudou, considere dar uma ⭐!
 
 ## 📄 Licença
 
