@@ -200,3 +200,60 @@ EOF
 alias aws-dev='aws-switch empresa-dev'
 alias aws-prod='aws-switch empresa-prod'
 alias aws-default='aws-switch default'
+
+# ═══════════════════════════════════════════════════════════════════
+# 🚀 AWS SSO Manager Enhanced - Novos Recursos
+# ═══════════════════════════════════════════════════════════════════
+
+# Detecta diretório do AWS SSO Manager
+AWS_SSO_MANAGER_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# Carrega funções de criptografia (se disponível)
+if [ -f "$AWS_SSO_MANAGER_DIR/crypto-functions.sh" ]; then
+    source "$AWS_SSO_MANAGER_DIR/crypto-functions.sh"
+fi
+
+# Carrega funções TUI (se disponível)
+if [ -f "$AWS_SSO_MANAGER_DIR/tui-functions.sh" ]; then
+    source "$AWS_SSO_MANAGER_DIR/tui-functions.sh"
+fi
+
+# Função de boas-vindas com novos recursos
+aws-help() {
+    echo "╔══════════════════════════════════════════════════════════╗"
+    echo "║               🚀 AWS SSO Manager Enhanced               ║"
+    echo "╠══════════════════════════════════════════════════════════╣"
+    echo "║                                                          ║"
+    echo "║  📋 COMANDOS BÁSICOS:                                   ║"
+    echo "║    aws-list         - Lista perfis disponíveis          ║"
+    echo "║    aws-switch       - Troca perfil                      ║"
+    echo "║    aws-login        - Login SSO                          ║"
+    echo "║    aws-who          - Perfil atual                      ║"
+    echo "║    aws-logout       - Logout completo                   ║"
+    echo "║    aws-discover-org - Descobrir contas da organização   ║"
+    echo "║                                                          ║"
+    echo "║  🎯 INTERFACE TUI (NOVO!):                              ║"
+    echo "║    aws-menu         - Menu principal interativo         ║"
+    echo "║    aws-choose       - Seletor interativo c/ preview     ║"
+    echo "║    aws-quick        - Troca rápida com fuzzy finder     ║"
+    echo "║    aws-tree         - Navegação em árvore               ║"
+    echo "║                                                          ║"
+    echo "║  🔐 SEGURANÇA (NOVO!):                                  ║"
+    echo "║    aws-secure-tokens     - Criptografar tokens          ║"
+    echo "║    aws-list-secure-tokens - Listar tokens protegidos    ║"
+    echo "║    aws-restore-token     - Restaurar token específico   ║"
+    echo "║                                                          ║"
+    echo "║  ⚡ ATALHOS RÁPIDOS:                                    ║"
+    echo "║    aws-dev          - Trocar para empresa-dev           ║"
+    echo "║    aws-prod         - Trocar para empresa-prod          ║"
+    echo "║                                                          ║"
+    echo "╚══════════════════════════════════════════════════════════╝"
+    echo ""
+    echo "💡 Dica: Use 'aws-menu' para uma experiência interativa completa!"
+    echo "🔐 Dica: Seus tokens são automaticamente criptografados para segurança!"
+}
+
+echo ""
+echo "🚀 AWS SSO Manager Enhanced carregado!"
+echo "📋 Digite 'aws-help' para ver todos os comandos disponíveis"
+echo "🎯 Digite 'aws-menu' para interface interativa"
