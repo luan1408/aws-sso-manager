@@ -165,15 +165,32 @@ _main_menu() {
                         echo ""
                         echo "🔐 Fazendo login SSO no perfil: $profile"
                         echo ""
-                        aws sso login --profile "$profile"
+                        echo "💡 INSTRUÇÕES PARA WSL/Linux:"
+                        echo "   1. O navegador pode não abrir automaticamente"
+                        echo "   2. Copie a URL que aparecer abaixo"
+                        echo "   3. Cole no seu navegador (Chrome/Firefox/Edge)"
+                        echo "   4. Use o código de autorização mostrado"
+                        echo "   5. WSL: Você pode usar 'cmd.exe /c start URL' para abrir no Windows"
+                        echo ""
+                        echo "🚀 Iniciando login SSO..."
+                        echo ""
+                        
+                        # Captura erros do xdg-open mas continua o processo
+                        aws sso login --profile "$profile" 2>/dev/null || aws sso login --profile "$profile"
+                        
                         if [ $? -eq 0 ]; then
                             _save_profile "$profile"
                             echo ""
                             echo "✅ Login realizado com sucesso!"
                             echo "📋 Perfil alterado para: $profile"
+                            echo "🔑 Credenciais SSO configuradas!"
                         else
                             echo ""
                             echo "❌ Falha no login SSO"
+                            echo "💡 Dicas:"
+                            echo "   - Verifique se copiou a URL corretamente"
+                            echo "   - Confirme se usou o código correto"
+                            echo "   - Tente novamente se necessário"
                         fi
                     else
                         echo ""
