@@ -1,316 +1,226 @@
 # AWS SSO Manager 🚀
 
 [![Author](https://img.shields.io/badge/Author-luan1408-blue?style=flat-square)](https://github.com/luan1408)
-![Simple](https://img.shields.io/badge/Simple-Ultra%20Clean-green?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Ready-brightgreen?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Bash](https://img.shields.io/badge/Shell-Bash-brightgreen?style=flat-square)
+![AWS](https://img.shields.io/badge/AWS-SSO-orange?style=flat-square)
 
-🎯 **Versão ultra-simplificada** do AWS SSO Manager - **zero configuração, zero problemas**!
+**Gerenciador visual e intuitivo para perfis AWS SSO com interface TUI moderna e persistência automática.**
 
-## ✨ Por que esta versão?
+## 🎯 O que é?
 
-**❌ Problema das versões anteriores:**
-- Muitos scripts confusos
-- Problemas de carregamento de funções
-- Instalação complexa
-- Conflitos entre versões
+AWS SSO Manager é uma ferramenta de linha de comando que simplifica drasticamente o gerenciamento de múltiplos perfis AWS SSO. Com uma interface visual elegante e navegação intuitiva, permite trocar entre contas AWS de forma rápida e persistente.
 
-**✅ Solução desta versão:**
-- **1 único arquivo** (`aws-simple.sh`)
-- **Funciona imediatamente**
-- **Zero configuração**
-- **Persistência garantida**
+## ✨ Principais Recursos
 
-## 🚀 Instalação Ultra-Simples
+### 🎨 **Interface Visual Moderna**
+- Menu TUI com bordas elegantes e emojis
+- Seleção visual de perfis com números
+- Feedback claro de status e operações
+- Navegação completamente através de menus
+
+### 🔄 **Gerenciamento Inteligente de Perfis**
+- **Persistência automática** - perfil selecionado mantém-se entre sessões
+- **Seleção flexível** - aceita números (1, 2, 3) ou nomes completos
+- **Lista visual** - perfis organizados e destacados
+- **Indicação clara** do perfil ativo atual
+
+### 🔐 **Login SSO Otimizado**
+- **Instruções claras** para ambientes WSL/Linux
+- **Detecção automática** de problemas de navegador
+- **URLs e códigos** claramente exibidos
+- **Dicas específicas** para cada ambiente
+
+### 🌍 **Acesso Global**
+- **Comando global** - funciona de qualquer diretório
+- **Instalação única** - configure uma vez, use sempre
+- **Zero dependências** - apenas bash e AWS CLI
+
+## 🚀 Instalação
+
+### Método 1: Instalação Global (Recomendado)
 
 ```bash
-# 1. Clone o repositório
+# Clone o repositório
 git clone https://github.com/luan1408/aws-sso-manager.git
 cd aws-sso-manager
 
-# 2. Use imediatamente (não precisa instalar nada!)
-./aws-simple.sh
+# Instale globalmente
+./install-global.sh
 ```
 
-**Pronto! Não há passo 3.** 🎉
+### Método 2: Uso Direto
 
-## 🎯 Como Usar
-
-### Menu Interativo (Recomendado)
 ```bash
+# Clone e use imediatamente
+git clone https://github.com/luan1408/aws-sso-manager.git
+cd aws-sso-manager
 ./aws-simple.sh
 ```
 
-Abre menu com opções:
-1. **Listar perfis** - Veja todos os perfis disponíveis
-2. **Trocar perfil** - Selecione outro perfil  
-3. **Login SSO** - Faça login em um perfil
-4. **Ver status** - Mostra perfil atual e credenciais
-5. **Sair** - Fecha o menu
+## 💻 Como Usar
 
-### Comandos Diretos (Para Scripts)
+### Interface Interativa (Principal)
+
+```bash
+# Abre o menu visual elegante
+aws-manager
+```
+
+**Opções disponíveis:**
+- **1** → Listar todos os perfis
+- **2** → Seletor visual de perfis (com números)
+- **3** → Login SSO (aceita números ou nomes)
+- **4** → Ver status e credenciais atuais
+- **5** → Sair
+
+### Comandos Diretos
+
 ```bash
 # Lista perfis rapidamente
-./aws-simple.sh list
+aws-manager list
 
-# Troca perfil diretamente  
-./aws-simple.sh switch empresa-prod
+# Troca perfil por nome
+aws-manager switch empresa-prod
 
-# Mostra ajuda
-./aws-simple.sh help
+# Troca perfil por posição (se disponível via interface)
+aws-manager switch 2
 ```
 
-## 🔄 Persistência Automática
+### Exemplo de Fluxo Completo
 
-### ✅ O Problema Original foi RESOLVIDO!
-
-**Antes:** Você trocava de conta, mas ela não persistia entre sessões.
-
-**Agora:** 
 ```bash
-./aws-simple.sh switch empresa-prod   # Troca para empresa-prod
-./aws-simple.sh list                  # ✅ Mostra "empresa-prod (atual)"
+# 1. Abre interface
+aws-manager
 
-# Em outro terminal:
-./aws-simple.sh list                  # ✅ AINDA mostra "empresa-prod (atual)"
+# 2. Escolhe opção 2 (Seletor visual)
+# 3. Digita: 3  (para o terceiro perfil)
+# 4. ✅ Perfil alterado e persistido
+
+# 5. Verifica em novo terminal
+aws-manager list
+# ➤ empresa-dev (perfil atual)
 ```
 
-### Como funciona a persistência?
+## 🔧 Pré-requisitos
 
-1. **Troca de perfil** → Salva automaticamente em `~/.aws/current_profile`
-2. **Comando list** → Lê o arquivo e mostra perfil correto
-3. **Novos terminais** → Mantêm o último perfil selecionado
+- **Bash** (Linux, macOS, WSL)
+- **AWS CLI v2** instalado e configurado
+- **Perfis AWS SSO** já configurados no `~/.aws/config`
 
-## 📋 Exemplos Práticos
+## 📊 Comparação com Outras Soluções
 
-### Cenário 1: Uso Diário
-```bash
-# Abre menu interativo
-./aws-simple.sh
+| Recurso | AWS SSO Manager | AWS CLI Nativo | aws-vault | granted |
+|---------|----------------|----------------|-----------|---------|
+| **Interface Visual** | ✅ TUI Moderna | ❌ Apenas CLI | ❌ CLI | ✅ TUI |
+| **Seleção por Número** | ✅ Sim | ❌ Não | ❌ Não | ❌ Não |
+| **Persistência Automática** | ✅ Sim | ❌ Não | ✅ Sim | ✅ Sim |
+| **Zero Configuração** | ✅ Sim | ❌ Complexo | ❌ Configuração | ❌ Setup |
+| **Comando Global** | ✅ Sim | ✅ Sim | ✅ Sim | ✅ Sim |
+| **Suporte WSL** | ✅ Otimizado | ⚠️ Limitado | ⚠️ Limitado | ⚠️ Limitado |
+| **Dependências** | ✅ Apenas Bash | ✅ Nenhuma | ❌ Go | ❌ Rust |
+| **Tamanho** | ✅ ~300 linhas | - | ❌ >50MB | ❌ >20MB |
 
-# Escolhe opção 2 (Trocar perfil)
-# Digita: empresa-dev
-# ✅ Perfil alterado e persistido!
-```
+## 🎯 Diferenciais Únicos
 
-### Cenário 2: Automação/Scripts
-```bash
-# Em um script bash
-./aws-simple.sh switch empresa-prod
-aws s3 ls  # Usa o perfil empresa-prod automaticamente
-```
+### 🚀 **Simplicidade Extrema**
+- **Um único arquivo** - toda funcionalidade em `aws-simple.sh`
+- **Instalação instantânea** - sem compilação ou dependências
+- **Interface intuitiva** - qualquer pessoa consegue usar
 
-### Cenário 3: Verificação Rápida
-```bash
-# Vê rapidamente todos os perfis
-./aws-simple.sh list
+### 🎨 **Experiência Visual Superior**
+- **Menus com bordas** elegantes usando caracteres Unicode
+- **Emojis informativos** para cada ação
+- **Cores e destaque** do perfil atual
+- **Feedback visual** claro de todas operações
 
-# Resultado:
-# 📋 Perfis AWS:
-# ─────────────────────────────────
-#   default
-#   empresa-dev
-# ➤ empresa-prod (atual)
-#   empresa-sandbox  
-# ─────────────────────────────────
-```
+### ⚡ **Performance e Leveza**
+- **Startup instantâneo** - sem overhead de linguagens compiladas
+- **Memória mínima** - apenas shell nativo
+- **Responsivo** - interface reativa e fluida
 
-## 🎨 Interface Limpa
+### 🔄 **Persistência Inteligente**
+- **Estado global** mantido entre terminais
+- **Compatibilidade total** com ferramentas AWS existentes
+- **Sincronização automática** com `AWS_PROFILE`
 
-### Menu Principal
-```
-🚀 AWS SSO Manager
+### 🌍 **Otimização WSL**
+- **Instruções específicas** para ambientes Windows/Linux
+- **Detecção automática** de problemas de navegador
+- **Comandos auxiliares** para abertura de URLs
 
-Perfil atual: empresa-prod
+### 🛠️ **Flexibilidade de Uso**
+- **Seleção múltipla** - números OU nomes de perfis
+- **Comandos diretos** para automação
+- **Menu interativo** para uso manual
+- **Compatível** com scripts existentes
 
-1) Listar perfis
-2) Trocar perfil
-3) Login SSO
-4) Ver status
-5) Sair
+## 📋 Casos de Uso
 
-Opção [1-5]: _
-```
-
-### Lista de Perfis
-```
-📋 Perfis AWS:
-─────────────────────────────────
-  default
-  empresa-dev
-➤ empresa-prod (atual)
-  empresa-sandbox
-─────────────────────────────────
-```
-
-## 🛡️ Sem Dependências Complexas
-
-**✅ O que você NÃO precisa:**
-- ❌ fzf, jq, ou outras ferramentas
-- ❌ Configuração do bashrc
-- ❌ Scripts de instalação 
-- ❌ Permissões especiais
-
-**✅ O que você PRECISA:**
-- ✅ AWS CLI configurado
-- ✅ Bash (já tem no Linux/macOS/WSL)
-
-## 🔧 Estrutura Super Simples
-
-### Arquivos do Projeto
-```
-aws-sso-manager/
-├── aws-simple.sh    # ← Tudo em 1 arquivo!
-├── README.md        # ← Esta documentação
-└── LICENSE          # ← Licença MIT
-```
-
-### Dados do Usuário
-```
-~/.aws/
-├── config           # Seus perfis AWS (não alterado)
-├── credentials      # Credenciais (se houver)  
-└── current_profile  # 🆕 Perfil persistido (criado automaticamente)
-```
-
-## 🐛 Troubleshooting
-
-### Perfil não persiste?
-```bash
-# Verifica se arquivo foi criado
-ls -la ~/.aws/current_profile
-
-# Deve mostrar o perfil atual
-cat ~/.aws/current_profile
-```
-
-### AWS CLI não encontrado?
-```bash
-# Verifica se AWS CLI está instalado
-aws --version
-
-# Se não estiver, instale:
-# Ubuntu: sudo apt install awscli
-# macOS: brew install awscli  
-# Windows: https://aws.amazon.com/cli/
-```
-
-### Script não executa?
-```bash
-# Verifica permissões
-ls -la aws-simple.sh
-
-# Se necessário, adiciona permissão de execução:
-chmod +x aws-simple.sh
-```
-
-## 📊 Comparação com Outras Versões
-
-| Recurso | Versão Simples | Versões Anteriores |
-|---------|---------------|-------------------|
-| **Arquivos** | 1 arquivo | 15+ arquivos |
-| **Instalação** | Zero configuração | Scripts complexos |
-| **Problemas** | Zero | Múltiplos |
-| **Dependências** | Nenhuma | fzf, openssl, etc. |
-| **Persistência** | ✅ Funciona | ❌ Problemas |
-| **Manutenção** | ✅ Simples | ❌ Complexa |
-
-## 🎯 Casos de Uso
-
-### Para Desenvolvedores
+### 👨‍💻 **Desenvolvedores**
 ```bash
 # Troca rápida entre ambientes
-./aws-simple.sh switch dev-account
-kubectl get pods  # Conecta no cluster de dev
-
-./aws-simple.sh switch prod-account  
-kubectl get pods  # Conecta no cluster de prod
+aws-manager  # Escolhe "dev" → trabalha → "prod" → deploy
 ```
 
-### Para DevOps
+### 🏢 **DevOps/SRE**
 ```bash
-# Em pipelines CI/CD
-./aws-simple.sh switch deployment-account
+# Gestão de múltiplas contas
+aws-manager  # Cliente A → Client B → Infraestrutura → Monitoramento
+```
+
+### 🔧 **Automação**
+```bash
+# Em pipelines/scripts
+aws-manager switch prod-deployment
 terraform apply
+aws-manager switch monitoring
+kubectl get pods
 ```
-
-### Para Administradores
-```bash
-# Gestão de múltiplas contas AWS
-./aws-simple.sh              # Menu interativo
-# Escolhe conta → faz operações → troca para próxima conta
-```
-
-## 🚀 Atualizações Futuras
-
-Para atualizar para versões futuras:
-
-```bash
-# Atualiza o repositório
-git pull origin main
-
-# Pronto! O aws-simple.sh é atualizado automaticamente
-```
-
-**Não há scripts de instalação para quebrar!** 🎉
 
 ## 🤝 Contribuição
 
-Este projeto foca na **simplicidade máxima**. Contribuições são bem-vindas, mas devem seguir o princípio:
+Contribuições são bem-vindas! Este projeto foca em **simplicidade máxima**:
 
-> **"Se adicionar complexidade, não será aceito"**
+### Diretrizes
+- ✅ Mantenha tudo em um arquivo
+- ✅ Zero dependências além do bash
+- ✅ Interface visual consistente
+- ❌ Não adicione complexidade desnecessária
 
-### Como contribuir:
-1. 🐛 **Bugs**: Reporte problemas via GitHub Issues
-2. 💡 **Ideias**: Sugira melhorias que mantenham a simplicidade  
-3. 🔧 **PRs**: Envie pull requests com melhorias simples
+### Como Contribuir
+```bash
+# Fork → Clone → Modificações → Pull Request
+git clone https://github.com/SEU-USER/aws-sso-manager.git
+cd aws-sso-manager
+# Faça suas modificações em aws-simple.sh
+# Teste localmente: ./aws-simple.sh
+# Crie PR com descrição clara
+```
 
 ## 📞 Suporte
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/luan1408/aws-sso-manager/issues)
 - 📧 **Email**: luan.1408lg@gmail.com
-- ⭐ **Stars**: Mostre que gostou dando uma estrela!
-
-## 👨‍💻 Autor
-
-**Luan Messias** - [@luan1408](https://github.com/luan1408)
-
-🌟 **GitHub**: https://github.com/luan1408/aws-sso-manager
-
----
+- ⭐ **Star**: Mostre que gostou dando uma estrela!
 
 ## 📄 Licença
 
 MIT License - veja [LICENSE](LICENSE) para detalhes.
 
+## 👨‍💻 Autor
+
+**Luan Messias** - [@luan1408](https://github.com/luan1408)
+
 ---
 
-## 🎉 Resultado Final
+## 🎉 Comece Agora!
 
-### ✅ **Antes desta versão:**
-- ❌ 15+ arquivos confusos
-- ❌ Problemas de instalação  
-- ❌ Dependências complexas
-- ❌ Persistência não funcionava
-
-### ✅ **Com esta versão:**
-- ✅ **1 arquivo simples**
-- ✅ **Zero configuração** 
-- ✅ **Funciona imediatamente**
-- ✅ **Persistência garantida**
-
-### 🚀 **Para usar agora:**
 ```bash
 git clone https://github.com/luan1408/aws-sso-manager.git
 cd aws-sso-manager
-./aws-simple.sh
+./install-global.sh
+aws-manager
 ```
 
-**Simples assim!** 🎯
-
----
-
-⚡ **Ultra-simplificado**: 1 arquivo, zero problemas  
-🎯 **Ultra-funcional**: Persistência, menu, comandos diretos  
-🛡️ **Ultra-confiável**: Sem dependências ou conflitos  
-
-**Gostou da simplicidade?** ⭐ **Dê uma estrela no repositório!**
+**🚀 Interface elegante, zero configuração, máxima produtividade!**
