@@ -23,28 +23,50 @@
 
 ## 🚀 Instalação Enhanced
 
-### Opção 1: Instalação Automática Enhanced
-```bash
-curl -sSL https://raw.githubusercontent.com/luan1408/aws-sso-manager/main/install-enhanced.sh | bash
-```
-
-### Opção 2: Instalação Manual Enhanced
+### ⭐ **RECOMENDADO**: Instalação Inteligente (NOVO!)
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/luan1408/aws-sso-manager.git
 cd aws-sso-manager
 
-# 2. Execute o instalador enhanced
-./install-enhanced.sh
+# 2. Execute o instalador inteligente
+./install.sh
 ```
 
-### Opção 3: Upgrade de Instalação Existente
-Se você já tem o AWS SSO Manager instalado:
+> 🎯 **O `install.sh` resolve automaticamente:**
+> - ✅ **Detecta e remove** versões antigas conflitantes
+> - ✅ **Instala versão atual** no terminal imediato  
+> - ✅ **Configura persistência** para novos terminais
+> - ✅ **Zero conflitos** - funcionamento garantido!
+
+### Opções Alternativas
+
+#### Instalação Automática Enhanced
 ```bash
-# No diretório do projeto
-git pull origin main
-./install-enhanced.sh
+curl -sSL https://raw.githubusercontent.com/luan1408/aws-sso-manager/main/install-enhanced.sh | bash
 ```
+
+#### Instalação Ultra-Limpa (Para casos complexos)
+```bash
+# Remove TODAS as instalações antigas e instala limpo
+./install-clean.sh
+```
+
+#### Instalação Avançada (Com backup e validação)
+```bash
+# Instalação com backup automático e validação completa
+./install-or-update.sh
+```
+
+### 🔄 **Atualizações Futuras**
+Para **qualquer atualização futura**, simplesmente execute:
+```bash
+cd aws-sso-manager
+git pull origin main
+./install.sh  # ← Resolve tudo automaticamente!
+```
+
+> 💡 **Fim dos conflitos!** Não precisa mais "ficar substituindo coisas" - o script resolve tudo automaticamente.
 
 ## 🎯 Novos Comandos
 
@@ -76,6 +98,43 @@ git pull origin main
 | `aws-logout` | Faz logout de todos os perfis |
 | `aws-discover-org` | Descobre automaticamente contas da organização |
 | `aws-help` | **NOVO!** Manual completo de comandos |
+
+## 🔄 **Persistência de Perfis** (NOVO!)
+
+### ✅ **Problema Resolvido**: aws-menu agora persiste seleções!
+
+**Antes:** Você selecionava uma conta no `aws-menu`, saía, executava `aws-list` e mostrava conta antiga.
+
+**Agora:** A conta selecionada no `aws-menu` **persiste permanentemente** entre sessões!
+
+### Como Funciona
+
+1. **Seleção no aws-menu** → Salva automaticamente em `~/.aws/current_profile`
+2. **aws-list** → Lê o arquivo e mostra a conta correta
+3. **Novos terminais** → Carregam automaticamente o último perfil usado
+
+### Comandos com Persistência
+
+| Comando | Comportamento |
+|---------|--------------|
+| `aws-menu` → selecionar conta → sair | ✅ **Persiste** para `aws-list` |
+| `aws-switch <perfil>` | ✅ **Salva** automaticamente |
+| `aws-login <perfil>` | ✅ **Persiste** após login |
+| `aws-list` | ✅ **Mostra** perfil persistido |
+| `aws-who` | ✅ **Lê** perfil persistido |
+
+### Exemplo de Uso
+```bash
+# Terminal 1
+aws-menu                    # Seleciona wiipo-prod
+# (sai do menu)
+aws-list                    # ✅ Mostra "wiipo-prod (atual)"
+
+# Terminal 2 (novo)
+aws-list                    # ✅ Ainda mostra "wiipo-prod (atual)"
+```
+
+> 🎉 **Zero configuração adicional** - funciona automaticamente após instalar com `./install.sh`!
 
 ## 💫 Experiência de Uso
 
@@ -110,12 +169,32 @@ aws-quick
 4. **Limpeza**: Remove tokens não criptografados do cache
 
 ### Estrutura de Arquivos
+
+#### Projeto
+```
+aws-sso-manager/
+├── functions.sh              # Funções principais com persistência
+├── tui-functions.sh         # Interface TUI interativa
+├── crypto-functions.sh      # Criptografia de tokens
+├── install.sh              # ⭐ Instalador inteligente (RECOMENDADO)
+├── install-clean.sh        # Instalação ultra-limpa
+├── install-or-update.sh    # Instalação avançada com backup
+├── install-enhanced.sh     # Instalador original enhanced
+└── README.md              # Esta documentação
+```
+
+#### Dados do Usuário
 ```
 ~/.aws-sso-secure/
 ├── master.key           # Chave mestre (600 permissions)
 ├── <token1>.json.enc    # Token criptografado
 ├── <token2>.json.enc    # Token criptografado
 └── ...
+
+~/.aws/
+├── config              # Configurações de perfis AWS
+├── credentials         # Credenciais (se houver)
+└── current_profile     # 🆕 Perfil atual persistido
 ```
 
 ### Comandos Manuais
@@ -258,11 +337,55 @@ echo -e "item1\nitem2\nitem3" | fzf
 # Backup de configurações existentes
 cp ~/.bashrc ~/.bashrc.backup
 
-# Re-instalar
-./install-enhanced.sh
+# Re-instalar com script inteligente (RECOMENDADO)
+./install.sh
+
+# OU: Instalação ultra-limpa para casos complexos
+./install-clean.sh
 
 # Testar funcionalidades
 aws-help
+```
+
+### Scripts de instalação não funcionam
+```bash
+# Verificar permissões
+chmod +x install.sh install-clean.sh install-or-update.sh
+
+# Executar instalação limpa
+./install-clean.sh
+
+# Verificar se functions.sh existe
+ls -la functions.sh
+
+# Testar carregamento manual
+source functions.sh
+aws-list
+```
+
+### Conflitos entre versões antigas
+```bash
+# Problema: "aws-list: command not found" após instalar
+# Solução: Usar instalação limpa
+./install-clean.sh
+
+# OU: Remover manualmente e reinstalar
+grep -v "aws-sso-manager\|aws-list\|aws-switch" ~/.bashrc > ~/.bashrc.clean
+mv ~/.bashrc.clean ~/.bashrc
+./install.sh
+```
+
+### aws-menu não persiste seleção
+```bash
+# Verificar se arquivo de estado existe após seleção
+ls -la ~/.aws/current_profile
+
+# Testar persistência manualmente
+aws-switch wiipo-dev
+cat ~/.aws/current_profile  # Deve mostrar: wiipo-dev
+
+# Se não funciona, reinstalar
+./install.sh
 ```
 
 ## 📈 Roadmap Futuro
