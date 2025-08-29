@@ -20,36 +20,118 @@ _save_profile() {
     export AWS_PROFILE="$1"
 }
 
-# Lista perfis
+# Lista perfis com interface bonita
 _list_profiles() {
-    echo "📋 Perfis AWS:"
-    echo "─────────────────────────────────"
+    clear
+    echo "╔══════════════════════════════════════════════════════════╗"
+    echo "║                   📋 PERFIS AWS DISPONÍVEIS              ║"
+    echo "╠══════════════════════════════════════════════════════════╣"
+    
     local current=$(_get_current_profile)
+    local count=0
+    
     aws configure list-profiles 2>/dev/null | while read profile; do
         if [ "$profile" = "$current" ]; then
-            echo "➤ $profile (atual)"
+            echo "║  ➤ $profile (perfil atual)"
         else
-            echo "  $profile"
+            echo "║    $profile"
         fi
+        count=$((count + 1))
     done
-    echo "─────────────────────────────────"
+    
+    echo "╚══════════════════════════════════════════════════════════╝"
 }
 
-# Menu principal
+# Seletor visual de perfis  
+_select_profile_visual() {
+    while true; do
+        clear
+        echo "╔══════════════════════════════════════════════════════════╗"
+        echo "║              🔄 SELEÇÃO VISUAL DE PERFIS                ║"
+        echo "╚══════════════════════════════════════════════════════════╝"
+        echo ""
+        
+        local current_profile=$(_get_current_profile)
+        local profiles=($(aws configure list-profiles 2>/dev/null))
+        local count=1
+        
+        echo "📋 Selecione o perfil desejado:"
+        echo ""
+        
+        # Lista perfis numerados
+        for profile in "${profiles[@]}"; do
+            if [ "$profile" = "$current_profile" ]; then
+                echo "  $count) ➤ $profile (atual)"
+            else
+                echo "  $count)   $profile"
+            fi
+            count=$((count + 1))
+        done
+        
+        echo ""
+        echo "  0) ⬅️  Voltar ao menu principal"
+        echo ""
+        
+        read -p "📌 Digite o número do perfil [0-$((count-1))]: " choice
+        
+        # Valida escolha
+        if [ "$choice" = "0" ]; then
+            break
+        elif [ "$choice" -gt 0 ] && [ "$choice" -lt "$count" ] 2>/dev/null; then
+            local selected_profile=${profiles[$((choice-1))]}
+            
+            clear
+            echo "╔══════════════════════════════════════════════════════════╗"
+            echo "║                    🔄 ALTERANDO PERFIL                  ║"
+            echo "╚══════════════════════════════════════════════════════════╝"
+            echo ""
+            echo "🔄 Alterando para: $selected_profile"
+            echo ""
+            
+            _save_profile "$selected_profile"
+            echo "✅ Perfil alterado com sucesso!"
+            
+            # Verifica credenciais
+            echo "🔍 Verificando credenciais..."
+            if aws sts get-caller-identity --output table 2>/dev/null; then
+                echo ""
+                echo "🔑 Credenciais válidas!"
+            else
+                echo ""
+                echo "⚠️  Credenciais expiradas ou inválidas"
+                echo "💡 Execute: aws sso login --profile $selected_profile"
+            fi
+            
+            echo ""
+            read -p "Pressione Enter para voltar ao menu..."
+            break
+        else
+            echo ""
+            echo "❌ Opção inválida! Digite um número entre 0 e $((count-1))"
+            sleep 2
+        fi
+    done
+}
+
+# Menu principal bonito
 _main_menu() {
     while true; do
         clear
-        echo "🚀 AWS SSO Manager"
+        echo "╔══════════════════════════════════════════════════════════╗"
+        echo "║                    🚀 AWS SSO Manager                   ║"
+        echo "╠══════════════════════════════════════════════════════════╣"
+        echo "║                                                          ║"
+        echo "║  📋 Perfil atual: $(_get_current_profile)"
+        echo "║                                                          ║"
+        echo "║  1) 📋 Listar todos os perfis                           ║"
+        echo "║  2) 🔄 Selecionar perfil (Interface visual)             ║" 
+        echo "║  3) 🔐 Fazer login SSO                                  ║"
+        echo "║  4) 👤 Ver status e credenciais                         ║"
+        echo "║  5) 🚪 Sair                                             ║"
+        echo "║                                                          ║"
+        echo "╚══════════════════════════════════════════════════════════╝"
         echo ""
-        echo "Perfil atual: $(_get_current_profile)"
-        echo ""
-        echo "1) Listar perfis"
-        echo "2) Trocar perfil"
-        echo "3) Login SSO"
-        echo "4) Ver status"
-        echo "5) Sair"
-        echo ""
-        read -p "Opção [1-5]: " choice
+        read -p "📌 Escolha uma opção [1-5]: " choice
         
         case $choice in
             1)
@@ -57,50 +139,100 @@ _main_menu() {
                 read -p "Pressione Enter..."
                 ;;
             2)
-                echo ""
-                _list_profiles
-                echo ""
-                read -p "Nome do perfil: " profile
-                if [ -n "$profile" ]; then
-                    if aws configure list-profiles 2>/dev/null | grep -q "^${profile}$"; then
-                        _save_profile "$profile"
-                        echo "✅ Perfil alterado para: $profile"
-                        if aws sts get-caller-identity >/dev/null 2>&1; then
-                            echo "🔑 Credenciais válidas"
-                        else
-                            echo "⚠️  Execute: aws sso login --profile $profile"
-                        fi
-                    else
-                        echo "❌ Perfil não encontrado"
-                    fi
-                fi
-                read -p "Pressione Enter..."
+                _select_profile_visual
                 ;;
             3)
+                clear
+                echo "╔══════════════════════════════════════════════════════════╗"
+                echo "║                      🔐 LOGIN SSO                       ║"
+                echo "╚══════════════════════════════════════════════════════════╝"
                 echo ""
-                read -p "Perfil para login: " profile
+                
+                # Mostra perfis disponíveis
+                echo "📋 Perfis disponíveis:"
+                echo ""
+                local profiles=($(aws configure list-profiles 2>/dev/null))
+                local count=1
+                for profile in "${profiles[@]}"; do
+                    echo "  $count) $profile"
+                    count=$((count + 1))
+                done
+                echo ""
+                
+                read -p "💻 Digite o nome do perfil para login: " profile
                 if [ -n "$profile" ]; then
-                    aws sso login --profile "$profile"
-                    if [ $? -eq 0 ]; then
-                        _save_profile "$profile"
-                        echo "✅ Login realizado!"
+                    if aws configure list-profiles 2>/dev/null | grep -q "^${profile}$"; then
+                        echo ""
+                        echo "🔐 Fazendo login SSO no perfil: $profile"
+                        echo ""
+                        aws sso login --profile "$profile"
+                        if [ $? -eq 0 ]; then
+                            _save_profile "$profile"
+                            echo ""
+                            echo "✅ Login realizado com sucesso!"
+                            echo "📋 Perfil alterado para: $profile"
+                        else
+                            echo ""
+                            echo "❌ Falha no login SSO"
+                        fi
+                    else
+                        echo ""
+                        echo "❌ Perfil '$profile' não encontrado"
                     fi
+                else
+                    echo ""
+                    echo "❌ Nome do perfil não informado"
                 fi
-                read -p "Pressione Enter..."
+                echo ""
+                read -p "Pressione Enter para voltar ao menu..."
                 ;;
             4)
+                clear
+                echo "╔══════════════════════════════════════════════════════════╗"
+                echo "║                 👤 STATUS E CREDENCIAIS                 ║"
+                echo "╚══════════════════════════════════════════════════════════╝"
                 echo ""
-                echo "📋 Perfil: $(_get_current_profile)"
-                aws sts get-caller-identity --output table 2>/dev/null || echo "❌ Sem credenciais"
-                read -p "Pressione Enter..."
+                echo "📋 Perfil atual: $(_get_current_profile)"
+                echo ""
+                echo "🔍 Verificando credenciais..."
+                echo ""
+                if aws sts get-caller-identity --output table 2>/dev/null; then
+                    echo ""
+                    echo "✅ Credenciais válidas e ativas!"
+                else
+                    echo "❌ Credenciais inválidas ou expiradas"
+                    echo ""
+                    echo "💡 Para fazer login:"
+                    echo "   aws sso login --profile $(_get_current_profile)"
+                fi
+                echo ""
+                read -p "Pressione Enter para voltar ao menu..."
                 ;;
             5)
-                echo "👋 Até logo!"
+                clear
+                echo "╔══════════════════════════════════════════════════════════╗"
+                echo "║                        👋 SAINDO                        ║"
+                echo "╚══════════════════════════════════════════════════════════╝"
+                echo ""
+                echo "✅ Perfil atual salvo: $(_get_current_profile)"
+                echo ""
+                echo "💡 Para usar novamente: ./aws-simple.sh"
+                echo ""
+                echo "👋 Obrigado por usar o AWS SSO Manager!"
+                echo ""
                 exit 0
                 ;;
             *)
-                echo "Opção inválida"
-                sleep 1
+                clear
+                echo "╔══════════════════════════════════════════════════════════╗"
+                echo "║                      ❌ OPÇÃO INVÁLIDA                   ║"
+                echo "╚══════════════════════════════════════════════════════════╝"
+                echo ""
+                echo "⚠️  Opção '$choice' não é válida"
+                echo ""
+                echo "💡 Escolha um número entre 1 e 5"
+                echo ""
+                read -p "Pressione Enter para continuar..."
                 ;;
         esac
     done
