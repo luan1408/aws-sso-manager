@@ -1,432 +1,279 @@
-# AWS SSO Manager Enhanced 🚀
+# AWS SSO Manager 🚀
 
 [![Author](https://img.shields.io/badge/Author-luan1408-blue?style=flat-square)](https://github.com/luan1408)
-![Enhanced](https://img.shields.io/badge/Enhanced-Security%20%2B%20TUI-green?style=flat-square)
+![Simple](https://img.shields.io/badge/Simple-Ultra%20Clean-green?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Ready-brightgreen?style=flat-square)
 
-🔐 **Versão aprimorada** do AWS SSO Manager com **criptografia de tokens** e **interface TUI interativa**!
+🎯 **Versão ultra-simplificada** do AWS SSO Manager - **zero configuração, zero problemas**!
 
-## ✨ Novos Recursos
+## ✨ Por que esta versão?
 
-### 🔐 **Segurança Avançada**
-- **Criptografia automática** de tokens SSO (AES-256-CBC)
-- **Proteção transparente** - funciona sem interferir no workflow
-- **Chave mestre** gerada automaticamente e protegida
-- **Interceptação inteligente** - criptografa novos tokens automaticamente
+**❌ Problema das versões anteriores:**
+- Muitos scripts confusos
+- Problemas de carregamento de funções
+- Instalação complexa
+- Conflitos entre versões
 
-### 🎯 **Interface TUI Moderna**
-- **Fuzzy finder** para seleção rápida de perfis
-- **Preview em tempo real** do status das credenciais
-- **Navegação interativa** com setas e atalhos
-- **Menu principal** com todas as funcionalidades
-- **Compatível** com terminais modernos
+**✅ Solução desta versão:**
+- **1 único arquivo** (`aws-simple.sh`)
+- **Funciona imediatamente**
+- **Zero configuração**
+- **Persistência garantida**
 
-## 🚀 Instalação Enhanced
+## 🚀 Instalação Ultra-Simples
 
-### ⭐ **RECOMENDADO**: Instalação Inteligente (NOVO!)
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/luan1408/aws-sso-manager.git
 cd aws-sso-manager
 
-# 2. Execute o instalador inteligente
-./install.sh
+# 2. Use imediatamente (não precisa instalar nada!)
+./aws-simple.sh
 ```
 
-> 🎯 **O `install.sh` resolve automaticamente:**
-> - ✅ **Detecta e remove** versões antigas conflitantes
-> - ✅ **Instala versão atual** no terminal imediato  
-> - ✅ **Configura persistência** para novos terminais
-> - ✅ **Zero conflitos** - funcionamento garantido!
+**Pronto! Não há passo 3.** 🎉
 
-### Opções Alternativas
+## 🎯 Como Usar
 
-#### Instalação Automática Enhanced
+### Menu Interativo (Recomendado)
 ```bash
-curl -sSL https://raw.githubusercontent.com/luan1408/aws-sso-manager/main/install-enhanced.sh | bash
+./aws-simple.sh
 ```
 
-#### Instalação Ultra-Limpa (Para casos complexos)
+Abre menu com opções:
+1. **Listar perfis** - Veja todos os perfis disponíveis
+2. **Trocar perfil** - Selecione outro perfil  
+3. **Login SSO** - Faça login em um perfil
+4. **Ver status** - Mostra perfil atual e credenciais
+5. **Sair** - Fecha o menu
+
+### Comandos Diretos (Para Scripts)
 ```bash
-# Remove TODAS as instalações antigas e instala limpo
-./install-clean.sh
+# Lista perfis rapidamente
+./aws-simple.sh list
+
+# Troca perfil diretamente  
+./aws-simple.sh switch empresa-prod
+
+# Mostra ajuda
+./aws-simple.sh help
 ```
 
-#### Instalação Avançada (Com backup e validação)
+## 🔄 Persistência Automática
+
+### ✅ O Problema Original foi RESOLVIDO!
+
+**Antes:** Você trocava de conta, mas ela não persistia entre sessões.
+
+**Agora:** 
 ```bash
-# Instalação com backup automático e validação completa
-./install-or-update.sh
+./aws-simple.sh switch empresa-prod   # Troca para empresa-prod
+./aws-simple.sh list                  # ✅ Mostra "empresa-prod (atual)"
+
+# Em outro terminal:
+./aws-simple.sh list                  # ✅ AINDA mostra "empresa-prod (atual)"
 ```
 
-### 🔄 **Atualizações Futuras**
-Para **qualquer atualização futura**, simplesmente execute:
+### Como funciona a persistência?
+
+1. **Troca de perfil** → Salva automaticamente em `~/.aws/current_profile`
+2. **Comando list** → Lê o arquivo e mostra perfil correto
+3. **Novos terminais** → Mantêm o último perfil selecionado
+
+## 📋 Exemplos Práticos
+
+### Cenário 1: Uso Diário
 ```bash
-cd aws-sso-manager
-git pull origin main
-./install.sh  # ← Resolve tudo automaticamente!
+# Abre menu interativo
+./aws-simple.sh
+
+# Escolhe opção 2 (Trocar perfil)
+# Digita: empresa-dev
+# ✅ Perfil alterado e persistido!
 ```
 
-> 💡 **Fim dos conflitos!** Não precisa mais "ficar substituindo coisas" - o script resolve tudo automaticamente.
-
-## 🎯 Novos Comandos
-
-### 🔥 Interface TUI Interativa
-
-| Comando | Descrição |
-|---------|-----------|
-| `aws-menu` | **Menu principal interativo** - Acesso a todas as funcionalidades |
-| `aws-choose` | **Seletor de perfil com preview** - Fuzzy finder com status em tempo real |
-| `aws-quick` | **Troca rápida** - Seleção direta com fuzzy finder |
-| `aws-tree` | **Navegação em árvore** - Organiza perfis por grupos |
-
-### 🔐 Segurança de Tokens
-
-| Comando | Descrição |
-|---------|-----------|
-| `aws-secure-tokens` | Criptografa todos os tokens SSO existentes |
-| `aws-list-secure-tokens` | Lista tokens protegidos |
-| `aws-restore-token <nome>` | Restaura token específico para uso |
-
-### 📋 Comandos Originais (Mantidos)
-
-| Comando | Descrição |
-|---------|-----------|
-| `aws-list` | Lista todos os perfis disponíveis |
-| `aws-switch <perfil>` | Troca para um perfil específico |
-| `aws-login <perfil>` | Faz login SSO em um perfil |
-| `aws-who` | Mostra qual perfil está ativo |
-| `aws-logout` | Faz logout de todos os perfis |
-| `aws-discover-org` | Descobre automaticamente contas da organização |
-| `aws-help` | **NOVO!** Manual completo de comandos |
-
-## 🔄 **Persistência de Perfis** (NOVO!)
-
-### ✅ **Problema Resolvido**: aws-menu agora persiste seleções!
-
-**Antes:** Você selecionava uma conta no `aws-menu`, saía, executava `aws-list` e mostrava conta antiga.
-
-**Agora:** A conta selecionada no `aws-menu` **persiste permanentemente** entre sessões!
-
-### Como Funciona
-
-1. **Seleção no aws-menu** → Salva automaticamente em `~/.aws/current_profile`
-2. **aws-list** → Lê o arquivo e mostra a conta correta
-3. **Novos terminais** → Carregam automaticamente o último perfil usado
-
-### Comandos com Persistência
-
-| Comando | Comportamento |
-|---------|--------------|
-| `aws-menu` → selecionar conta → sair | ✅ **Persiste** para `aws-list` |
-| `aws-switch <perfil>` | ✅ **Salva** automaticamente |
-| `aws-login <perfil>` | ✅ **Persiste** após login |
-| `aws-list` | ✅ **Mostra** perfil persistido |
-| `aws-who` | ✅ **Lê** perfil persistido |
-
-### Exemplo de Uso
+### Cenário 2: Automação/Scripts
 ```bash
-# Terminal 1
-aws-menu                    # Seleciona empresa-prod
-# (sai do menu)
-aws-list                    # ✅ Mostra "empresa-prod (atual)"
-
-# Terminal 2 (novo)
-aws-list                    # ✅ Ainda mostra "empresa-prod (atual)"
+# Em um script bash
+./aws-simple.sh switch empresa-prod
+aws s3 ls  # Usa o perfil empresa-prod automaticamente
 ```
 
-> 🎉 **Zero configuração adicional** - funciona automaticamente após instalar com `./install.sh`!
-
-## 💫 Experiência de Uso
-
-### 1. **Interface Principal**
+### Cenário 3: Verificação Rápida
 ```bash
-aws-menu
+# Vê rapidamente todos os perfis
+./aws-simple.sh list
+
+# Resultado:
+# 📋 Perfis AWS:
+# ─────────────────────────────────
+#   default
+#   empresa-dev
+# ➤ empresa-prod (atual)
+#   empresa-sandbox  
+# ─────────────────────────────────
 ```
-![TUI Menu](https://via.placeholder.com/600x400/1a1a2e/fff?text=AWS+SSO+Manager+TUI)
 
-### 2. **Seleção Interativa de Perfis**
-```bash
-aws-choose
+## 🎨 Interface Limpa
+
+### Menu Principal
 ```
-- ✅ **Preview de status** em tempo real
-- 🔍 **Busca fuzzy** por nome
-- ⌨️ **Navegação com setas**
-- 📋 **Detalhes do perfil** no painel lateral
+🚀 AWS SSO Manager
 
-### 3. **Troca Rápida**
-```bash
-aws-quick
+Perfil atual: empresa-prod
+
+1) Listar perfis
+2) Trocar perfil
+3) Login SSO
+4) Ver status
+5) Sair
+
+Opção [1-5]: _
 ```
-- ⚡ **Seleção direta** com fuzzy finder
-- 🚀 **Mais rápido** para usuários avançados
 
-## 🔐 Como Funciona a Criptografia
+### Lista de Perfis
+```
+📋 Perfis AWS:
+─────────────────────────────────
+  default
+  empresa-dev
+➤ empresa-prod (atual)
+  empresa-sandbox
+─────────────────────────────────
+```
 
-### Automática e Transparente
-1. **Interceptação**: Monitora criação de novos tokens
-2. **Criptografia**: Automaticamente criptografa com AES-256-CBC
-3. **Restauração**: Descriptografa transparentemente quando necessário
-4. **Limpeza**: Remove tokens não criptografados do cache
+## 🛡️ Sem Dependências Complexas
 
-### Estrutura de Arquivos
+**✅ O que você NÃO precisa:**
+- ❌ fzf, jq, ou outras ferramentas
+- ❌ Configuração do bashrc
+- ❌ Scripts de instalação 
+- ❌ Permissões especiais
 
-#### Projeto
+**✅ O que você PRECISA:**
+- ✅ AWS CLI configurado
+- ✅ Bash (já tem no Linux/macOS/WSL)
+
+## 🔧 Estrutura Super Simples
+
+### Arquivos do Projeto
 ```
 aws-sso-manager/
-├── functions.sh              # Funções principais com persistência
-├── tui-functions.sh         # Interface TUI interativa
-├── crypto-functions.sh      # Criptografia de tokens
-├── install.sh              # ⭐ Instalador inteligente (RECOMENDADO)
-├── install-clean.sh        # Instalação ultra-limpa
-├── install-or-update.sh    # Instalação avançada com backup
-├── install-enhanced.sh     # Instalador original enhanced
-└── README.md              # Esta documentação
+├── aws-simple.sh    # ← Tudo em 1 arquivo!
+├── README.md        # ← Esta documentação
+└── LICENSE          # ← Licença MIT
 ```
 
-#### Dados do Usuário
+### Dados do Usuário
 ```
-~/.aws-sso-secure/
-├── master.key           # Chave mestre (600 permissions)
-├── <token1>.json.enc    # Token criptografado
-├── <token2>.json.enc    # Token criptografado
-└── ...
-
 ~/.aws/
-├── config              # Configurações de perfis AWS
-├── credentials         # Credenciais (se houver)
-└── current_profile     # 🆕 Perfil atual persistido
+├── config           # Seus perfis AWS (não alterado)
+├── credentials      # Credenciais (se houver)  
+└── current_profile  # 🆕 Perfil persistido (criado automaticamente)
 ```
 
-### Comandos Manuais
+## 🐛 Troubleshooting
+
+### Perfil não persiste?
 ```bash
-# Proteger tokens existentes
-aws-secure-tokens
-
-# Ver tokens protegidos
-aws-list-secure-tokens
-
-# Restaurar token específico (raramente necessário)
-aws-restore-token a1b2c3d4e5f6.json
-```
-
-## 🎨 Personalização da TUI
-
-### Cores e Tema
-A TUI usa um esquema de cores moderno compatível com terminais modernos:
-- **Catppuccin-inspired** color scheme
-- **Bordas e separadores** elegantes
-- **Status icons** informativos (✅❌⚡🔒)
-
-### Atalhos de Teclado
-- `↑↓` ou `Ctrl+K/J`: Navegação
-- `Enter`: Selecionar
-- `Tab`: Toggle preview
-- `Ctrl+C`: Cancelar
-- `?`: Ajuda (em algumas interfaces)
-
-## 📊 Comparação com Ferramentas Similares
-
-| Recurso | AWS SSO Manager | aws-sso-creds | synfinatic/aws-sso-cli |
-|---------|-----------------|---------------|------------------------|
-| **Interface TUI** | ✅ Completa | ❌ | ❌ |
-| **Fuzzy Finder** | ✅ fzf | ❌ | ❌ |
-| **Criptografia** | ✅ AES-256 | ❌ | ✅ Keyring |
-| **Auto-discovery** | ✅ Organizations | ❌ | ✅ |
-| **Preview Status** | ✅ Tempo real | ❌ | ❌ |
-| **Bash Integration** | ✅ Nativo | ✅ | ❌ |
-
-## 🔧 Dependências
-
-### Automaticamente Instaladas
-- **fzf**: Fuzzy finder para seleção interativa
-- **openssl**: Criptografia AES-256
-
-### Pré-requisitos
-- ✅ **AWS CLI v2** 
-- ✅ **Bash** (Linux/macOS/WSL)
-- ✅ **Python 3** (para descoberta de organizações)
-
-## 🚀 Workflow Recomendado
-
-### Configuração Inicial (Uma vez)
-```bash
-# 1. Instalar o enhanced
-./install-enhanced.sh
-
-# 2. Recarregar terminal
-source ~/.bashrc
-
-# 3. Descobrir contas da organização
-aws-discover-org
-
-# 4. Proteger tokens existentes
-aws-secure-tokens
-```
-
-### Uso Diário
-```bash
-# Opção 1: Menu interativo (recomendado)
-aws-menu
-
-# Opção 2: Seleção rápida
-aws-choose
-
-# Opção 3: Troca ultra-rápida
-aws-quick
-
-# Opção 4: Comandos tradicionais
-aws-switch meu-perfil
-```
-
-## 🛡️ Segurança e Privacidade
-
-### O que é Criptografado
-- ✅ **Tokens de acesso** SSO
-- ✅ **Tokens de refresh**
-- ✅ **Metadados de sessão**
-
-### O que NÃO é Criptografado
-- ❌ **Configuração de perfis** (`~/.aws/config`)
-- ❌ **Configurações do AWS CLI**
-- ❌ **Logs do sistema**
-
-### Chave Mestre
-- 🔐 **256-bit** gerada com OpenSSL
-- 📁 **Stored** em `~/.aws-sso-secure/master.key`
-- 🔒 **Permissions** 600 (somente owner)
-- 🔄 **Regenerável** (re-criptografa todos os tokens)
-
-## 🐛 Troubleshooting Enhanced
-
-### fzf não encontrado
-```bash
-# Ubuntu/Debian
-sudo apt install fzf
-
-# CentOS/RHEL
-sudo yum install fzf
-
-# macOS
-brew install fzf
-
-# Arch Linux
-sudo pacman -S fzf
-```
-
-### Erro de criptografia
-```bash
-# Verifica se OpenSSL está disponível
-openssl version
-
-# Re-gera chave mestre se necessário
-rm ~/.aws-sso-secure/master.key
-aws-secure-tokens
-```
-
-### Interface TUI com problemas
-```bash
-# Verifica compatibilidade do terminal
-echo $TERM
-
-# Testa fzf diretamente
-echo -e "item1\nitem2\nitem3" | fzf
-```
-
-### Migração de versão anterior
-```bash
-# Backup de configurações existentes
-cp ~/.bashrc ~/.bashrc.backup
-
-# Re-instalar com script inteligente (RECOMENDADO)
-./install.sh
-
-# OU: Instalação ultra-limpa para casos complexos
-./install-clean.sh
-
-# Testar funcionalidades
-aws-help
-```
-
-### Scripts de instalação não funcionam
-```bash
-# Verificar permissões
-chmod +x install.sh install-clean.sh install-or-update.sh
-
-# Executar instalação limpa
-./install-clean.sh
-
-# Verificar se functions.sh existe
-ls -la functions.sh
-
-# Testar carregamento manual
-source functions.sh
-aws-list
-```
-
-### Conflitos entre versões antigas
-```bash
-# Problema: "aws-list: command not found" após instalar
-# Solução: Usar instalação limpa
-./install-clean.sh
-
-# OU: Remover manualmente e reinstalar
-grep -v "aws-sso-manager\|aws-list\|aws-switch" ~/.bashrc > ~/.bashrc.clean
-mv ~/.bashrc.clean ~/.bashrc
-./install.sh
-```
-
-### aws-menu não persiste seleção
-```bash
-# Verificar se arquivo de estado existe após seleção
+# Verifica se arquivo foi criado
 ls -la ~/.aws/current_profile
 
-# Testar persistência manualmente
-aws-switch empresa-dev
-cat ~/.aws/current_profile  # Deve mostrar: empresa-dev
-
-# Se não funciona, reinstalar
-./install.sh
+# Deve mostrar o perfil atual
+cat ~/.aws/current_profile
 ```
 
-## 📈 Roadmap Futuro
-
-### Versão 3.0 (Planejado)
-- 🔍 **Integração com AWS CloudFormation** stacks
-- 📊 **Dashboard de uso** de recursos
-- 🔔 **Notificações** de expiração de credenciais
-- 🌐 **Interface web** opcional
-- 📱 **Exportação** de configurações
-
-### Contribuições
-- 🤝 **Pull requests** bem-vindos
-- 🐛 **Issues** para bugs e sugestões
-- 📖 **Documentação** sempre pode melhorar
-
-## 📞 Suporte Enhanced
-
-### Canais de Suporte
-- 🐛 **GitHub Issues**: Para bugs e feature requests
-- 📖 **Documentação**: Este README + comentários no código
-- ⭐ **GitHub Stars**: Mostra que o projeto é útil!
-
-### Informações de Debug
+### AWS CLI não encontrado?
 ```bash
-# Versões de dependências
+# Verifica se AWS CLI está instalado
 aws --version
-fzf --version
-openssl version
-bash --version
 
-# Status do projeto
-aws-help
-aws-list-secure-tokens
+# Se não estiver, instale:
+# Ubuntu: sudo apt install awscli
+# macOS: brew install awscli  
+# Windows: https://aws.amazon.com/cli/
 ```
 
-## 👨‍💻 Autor Enhanced
+### Script não executa?
+```bash
+# Verifica permissões
+ls -la aws-simple.sh
+
+# Se necessário, adiciona permissão de execução:
+chmod +x aws-simple.sh
+```
+
+## 📊 Comparação com Outras Versões
+
+| Recurso | Versão Simples | Versões Anteriores |
+|---------|---------------|-------------------|
+| **Arquivos** | 1 arquivo | 15+ arquivos |
+| **Instalação** | Zero configuração | Scripts complexos |
+| **Problemas** | Zero | Múltiplos |
+| **Dependências** | Nenhuma | fzf, openssl, etc. |
+| **Persistência** | ✅ Funciona | ❌ Problemas |
+| **Manutenção** | ✅ Simples | ❌ Complexa |
+
+## 🎯 Casos de Uso
+
+### Para Desenvolvedores
+```bash
+# Troca rápida entre ambientes
+./aws-simple.sh switch dev-account
+kubectl get pods  # Conecta no cluster de dev
+
+./aws-simple.sh switch prod-account  
+kubectl get pods  # Conecta no cluster de prod
+```
+
+### Para DevOps
+```bash
+# Em pipelines CI/CD
+./aws-simple.sh switch deployment-account
+terraform apply
+```
+
+### Para Administradores
+```bash
+# Gestão de múltiplas contas AWS
+./aws-simple.sh              # Menu interativo
+# Escolhe conta → faz operações → troca para próxima conta
+```
+
+## 🚀 Atualizações Futuras
+
+Para atualizar para versões futuras:
+
+```bash
+# Atualiza o repositório
+git pull origin main
+
+# Pronto! O aws-simple.sh é atualizado automaticamente
+```
+
+**Não há scripts de instalação para quebrar!** 🎉
+
+## 🤝 Contribuição
+
+Este projeto foca na **simplicidade máxima**. Contribuições são bem-vindas, mas devem seguir o princípio:
+
+> **"Se adicionar complexidade, não será aceito"**
+
+### Como contribuir:
+1. 🐛 **Bugs**: Reporte problemas via GitHub Issues
+2. 💡 **Ideias**: Sugira melhorias que mantenham a simplicidade  
+3. 🔧 **PRs**: Envie pull requests com melhorias simples
+
+## 📞 Suporte
+
+- 🐛 **Issues**: [GitHub Issues](https://github.com/luan1408/aws-sso-manager/issues)
+- 📧 **Email**: luan.1408lg@gmail.com
+- ⭐ **Stars**: Mostre que gostou dando uma estrela!
+
+## 👨‍💻 Autor
 
 **Luan Messias** - [@luan1408](https://github.com/luan1408)
 
-📧 **Contato**: luan.1408lg@gmail.com
 🌟 **GitHub**: https://github.com/luan1408/aws-sso-manager
 
 ---
@@ -437,17 +284,33 @@ MIT License - veja [LICENSE](LICENSE) para detalhes.
 
 ---
 
-## 🙏 Agradecimentos
+## 🎉 Resultado Final
 
-- **AWS CLI Team** - Pela ferramenta fundamental
-- **fzf creators** - Pelo fuzzy finder incrível
-- **Community** - Por feedback e contribuições
+### ✅ **Antes desta versão:**
+- ❌ 15+ arquivos confusos
+- ❌ Problemas de instalação  
+- ❌ Dependências complexas
+- ❌ Persistência não funcionava
+
+### ✅ **Com esta versão:**
+- ✅ **1 arquivo simples**
+- ✅ **Zero configuração** 
+- ✅ **Funciona imediatamente**
+- ✅ **Persistência garantida**
+
+### 🚀 **Para usar agora:**
+```bash
+git clone https://github.com/luan1408/aws-sso-manager.git
+cd aws-sso-manager
+./aws-simple.sh
+```
+
+**Simples assim!** 🎯
 
 ---
 
-⚡ **Enhanced by**: Criptografia + TUI interativa + Fuzzy finder  
-🚀 **Performance**: Otimizado para uso diário  
-🔐 **Security**: Tokens protegidos automaticamente  
-🎯 **UX**: Interface moderna e intuitiva  
+⚡ **Ultra-simplificado**: 1 arquivo, zero problemas  
+🎯 **Ultra-funcional**: Persistência, menu, comandos diretos  
+🛡️ **Ultra-confiável**: Sem dependências ou conflitos  
 
-**Gostou?** ⭐ Dê uma estrela no repositório!
+**Gostou da simplicidade?** ⭐ **Dê uma estrela no repositório!**
