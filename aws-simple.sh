@@ -159,9 +159,24 @@ _main_menu() {
                 done
                 echo ""
                 
-                read -p "💻 Digite o nome do perfil para login: " profile
-                if [ -n "$profile" ]; then
-                    if aws configure list-profiles 2>/dev/null | grep -q "^${profile}$"; then
+                read -p "💻 Digite o número ou nome do perfil para login: " input
+                if [ -n "$input" ]; then
+                    # Verifica se é um número
+                    if [[ "$input" =~ ^[0-9]+$ ]]; then
+                        # Converte número para nome do perfil
+                        if [ "$input" -gt 0 ] && [ "$input" -lt "$count" ]; then
+                            profile=${profiles[$((input-1))]}
+                            echo "📋 Perfil selecionado: $profile"
+                        else
+                            echo "❌ Número inválido! Digite entre 1 e $((count-1))"
+                            profile=""
+                        fi
+                    else
+                        # Usa o nome diretamente
+                        profile="$input"
+                    fi
+                    
+                    if [ -n "$profile" ] && aws configure list-profiles 2>/dev/null | grep -q "^${profile}$"; then
                         echo ""
                         echo "🔐 Fazendo login SSO no perfil: $profile"
                         echo ""
@@ -195,10 +210,12 @@ _main_menu() {
                     else
                         echo ""
                         echo "❌ Perfil '$profile' não encontrado"
+                        echo "💡 Use o número (ex: 2) ou nome completo (ex: wiipo-prod)"
                     fi
                 else
                     echo ""
-                    echo "❌ Nome do perfil não informado"
+                    echo "❌ Nada foi digitado!"
+                    echo "💡 Digite o número ou nome do perfil"
                 fi
                 echo ""
                 read -p "Pressione Enter para voltar ao menu..."
